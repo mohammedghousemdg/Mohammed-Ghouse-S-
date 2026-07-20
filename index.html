@@ -1,1 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohammed Ghouse — Network Engineer | SD-WAN, BGP, OSPF, MPLS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F8FAFC;
+    --surface: #FFFFFF;
+    --surface-2: #F1F5F9;
+    --line: #DCE3EC;
+    --text: #1E293B;
+    --text-muted: #64748B;
+    --signal: #0D9488;
+    --signal-dim: #0F766E;
+    --signal-tint: #CCFBF1;
+    --alert: #D97706;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --font-sans: 'IBM Plex Sans', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg); color:var(--text); font-family:var(--font-sans); line-height:1.6;}
+  ::selection{background:var(--signal-tint); color:var(--signal-dim);}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
 
+  header{position:sticky; top:0; z-index:50; background:rgba(248,250,252,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  nav{display:flex; align-items:center; justify-content:space-between; padding:16px 28px; max-width:1080px; margin:0 auto;}
+  .logo{display:flex; align-items:center; gap:10px;}
+  .logo .dot{width:8px; height:8px; border-radius:50%; background:var(--signal); box-shadow:0 0 8px var(--signal-tint); flex-shrink:0;}
+  .logo-name{font-family:var(--font-sans); font-weight:700; font-size:16px; color:var(--text); line-height:1.1;}
+  .logo-role{font-family:var(--font-mono); font-size:10.5px; color:var(--text-muted); letter-spacing:0.04em;}
+  .navlinks{display:flex; gap:26px; font-family:var(--font-mono); font-size:13px; color:var(--text-muted);}
+  .navlinks a:hover{color:var(--signal);}
+  @media(max-width:700px){.navlinks{gap:14px; font-size:11.5px;}}
+
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:0.14em; color:var(--signal-dim); text-transform:uppercase; margin-bottom:18px; display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:''; width:20px; height:1px; background:var(--signal);}
+
+  h1{font-family:var(--font-mono); font-weight:700; font-size:clamp(28px, 4.4vw, 44px); line-height:1.15; letter-spacing:-0.01em; margin-bottom:20px; color:var(--text);}
+  h1 .accent{color:var(--signal);}
+  .lede{color:var(--text-muted); font-size:16.5px; max-width:58ch; margin-bottom:28px;}
+
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{font-family:var(--font-mono); font-size:13px; font-weight:600; padding:13px 22px; border-radius:4px; border:1.5px solid var(--signal); display:inline-flex; align-items:center; gap:8px; transition:all .2s ease; cursor:pointer;}
+  .btn-primary{background:var(--signal); color:#fff;}
+  .btn-primary:hover{background:var(--signal-dim); border-color:var(--signal-dim);}
+  .btn-ghost{border-color:var(--line); color:var(--text-muted); background:var(--surface);}
+  .btn-ghost:hover{border-color:var(--signal); color:var(--signal);}
+
+  .hero{padding:80px 0 50px; display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; align-items:center;}
+  @media(max-width:860px){.hero{grid-template-columns:1fr; padding-top:50px;}}
+
+  .topo{position:relative; aspect-ratio:1/1; max-width:420px; margin:0 auto; background:var(--surface); border:1px solid var(--line); border-radius:12px;}
+  .topo svg{width:100%; height:100%;}
+  .link-path{stroke:var(--line); stroke-width:1.5; fill:none;}
+  .link-pulse{stroke:var(--signal); stroke-width:2; fill:none; stroke-dasharray:6 220; stroke-dashoffset:0; animation:flow 3.2s linear infinite;}
+  @keyframes flow{ to{ stroke-dashoffset:-226; } }
+  .node-hub{fill:var(--signal-tint); stroke:var(--signal); stroke-width:2;}
+  .node-branch{fill:var(--surface-2); stroke:var(--line); stroke-width:1.5;}
+  .node-label{font-family:var(--font-mono); font-size:9px; fill:var(--text-muted);}
+
+  .stats{border-top:1px solid var(--line); border-bottom:1px solid var(--line); display:grid; grid-template-columns:repeat(4,1fr);}
+  @media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr);}}
+  .stat{padding:26px; border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat-num{font-family:var(--font-mono); font-weight:700; font-size:26px; color:var(--signal);}
+  .stat-label{font-size:12px; color:var(--text-muted); margin-top:4px;}
+
+  section{padding:70px 0;}
+  .section-head{display:flex; align-items:baseline; gap:16px; margin-bottom:14px;}
+  .section-num{font-family:var(--font-mono); color:var(--signal); font-size:14px;}
+  .section-title{font-family:var(--font-mono); font-weight:700; font-size:22px; color:var(--text);}
+  .section-rule{flex:1; height:1px; background:var(--line);}
+  .section-sub{color:var(--text-muted); font-size:14.5px; margin:0 0 32px; max-width:66ch;}
+
+  .exp-item{display:grid; grid-template-columns:150px 1fr; gap:24px; padding:26px 0; border-bottom:1px solid var(--line);}
+  @media(max-width:640px){.exp-item{grid-template-columns:1fr; gap:8px;}}
+  .exp-period{font-family:var(--font-mono); font-size:12px; color:var(--signal-dim); white-space:nowrap;}
+  .exp-role{font-weight:700; font-size:16.5px; margin-bottom:2px; color:var(--text);}
+  .exp-org{color:var(--text-muted); font-size:13.5px; margin-bottom:12px;}
+  .exp-desc li{margin-left:18px; margin-bottom:6px; color:var(--text-muted); font-size:14px; max-width:66ch;}
+
+  .diagram-block{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:30px; margin-bottom:20px; box-shadow:0 1px 2px rgba(15,23,42,0.04);}
+  .diagram-svg{width:100%; height:auto; display:block;}
+  .diagram-caption{margin-top:20px; padding-top:18px; border-top:1px solid var(--line);}
+  .diagram-caption ol{margin-left:20px; color:var(--text-muted); font-size:13.5px;}
+  .diagram-caption li{margin-bottom:6px;}
+  .diagram-caption li b{color:var(--text);}
+  .legend{display:flex; gap:20px; flex-wrap:wrap; margin-top:16px; font-family:var(--font-mono); font-size:11px; color:var(--text-muted);}
+  .legend-item{display:flex; align-items:center; gap:7px;}
+  .legend-swatch{width:14px; height:3px; border-radius:2px;}
+
+  .skill-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  @media(max-width:760px){.skill-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:480px){.skill-grid{grid-template-columns:1fr;}}
+  .skill-cat{background:var(--surface); padding:22px;}
+  .skill-cat-title{font-family:var(--font-mono); font-size:11px; letter-spacing:0.07em; color:var(--alert); text-transform:uppercase; margin-bottom:12px;}
+  .skill-tags{display:flex; flex-wrap:wrap; gap:7px;}
+  .skill-tag{font-family:var(--font-mono); font-size:11.5px; color:var(--text-muted); border:1px solid var(--line); padding:5px 9px; border-radius:4px; background:var(--surface-2);}
+
+  .cert-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .cert{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:20px 22px; flex:1; min-width:220px;}
+  .cert-name{font-weight:700; font-size:15px; margin-bottom:6px; color:var(--text);}
+  .cert-status{font-family:var(--font-mono); font-size:11px; color:var(--signal);}
+
+  .contact-box{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:44px; text-align:center;}
+  .contact-box h2{font-family:var(--font-mono); font-size:24px; margin-bottom:12px; color:var(--text);}
+  .contact-box p{color:var(--text-muted); margin-bottom:24px;}
+  .contact-links{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+
+  .page-nav-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; margin-top:10px; overflow:hidden;}
+  @media(max-width:760px){.page-nav-cards{grid-template-columns:1fr;}}
+  .page-nav-card{background:var(--surface); padding:26px; transition:background .2s ease;}
+  .page-nav-card:hover{background:var(--surface-2);}
+  .page-nav-card .pnc-num{font-family:var(--font-mono); color:var(--signal); font-size:12px;}
+  .page-nav-card .pnc-title{font-family:var(--font-mono); font-weight:700; font-size:15px; margin:6px 0 8px; color:var(--signal-dim);}
+  .page-nav-card .pnc-desc{color:var(--text-muted); font-size:13px;}
+
+  footer{padding:28px 0; text-align:center; color:var(--text-muted); font-family:var(--font-mono); font-size:12px; border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#home" class="logo">
+      <span class="dot"></span>
+      <div><div class="logo-name">Mohammed Ghouse</div><div class="logo-role">NETWORK ENGINEER</div></div>
+    </a>
+    <div class="navlinks">
+      <a href="#home">home</a>
+      <a href="#experience">experience</a>
+      <a href="#architecture">architecture</a>
+      <a href="#skills">skills</a>
+      <a href="#contact">contact</a>
+    </div>
+  </nav>
+</header>
+
+<div class="wrap" id="home">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Network Engineer · Bengaluru, IN</div>
+      <h1>I keep networks running when everything is <span class="accent">trying to bring them down.</span></h1>
+      <p class="lede">5 years in enterprise WAN and SD-WAN. My work sits at the intersection of routing protocols and business continuity — BGP, OSPF, MPLS, QoS policy design, and multi-link failover across ILL, MPLS, 4G, PPPoE, and RF, in environments where downtime is a financial and reputational risk, not an inconvenience.</p>
+      <div class="cta-row">
+        <a href="#contact" class="btn btn-primary">Get in touch →</a>
+        <a href="#experience" class="btn btn-ghost">View experience</a>
+      </div>
+    </div>
+
+    <div class="topo">
+      <svg viewBox="0 0 400 400">
+        <path class="link-path" d="M200,200 L80,90" />
+        <path class="link-path" d="M200,200 L320,90" />
+        <path class="link-path" d="M200,200 L80,310" />
+        <path class="link-path" d="M200,200 L320,310" />
+        <path class="link-path" d="M200,200 L200,60" />
+        <path class="link-path" d="M200,200 L60,200" />
+        <path class="link-path" d="M200,200 L340,200" />
+        <path class="link-pulse" d="M200,200 L80,90" />
+        <path class="link-pulse" d="M200,200 L320,90" style="animation-delay:-0.6s" />
+        <path class="link-pulse" d="M200,200 L80,310" style="animation-delay:-1.2s" />
+        <path class="link-pulse" d="M200,200 L320,310" style="animation-delay:-1.8s" />
+        <path class="link-pulse" d="M200,200 L200,60" style="animation-delay:-2.4s" />
+        <path class="link-pulse" d="M200,200 L60,200" style="animation-delay:-0.3s" />
+        <path class="link-pulse" d="M200,200 L340,200" style="animation-delay:-1.5s" />
+        <circle class="node-branch" cx="80" cy="90" r="10"/>
+        <circle class="node-branch" cx="320" cy="90" r="10"/>
+        <circle class="node-branch" cx="80" cy="310" r="10"/>
+        <circle class="node-branch" cx="320" cy="310" r="10"/>
+        <circle class="node-branch" cx="200" cy="60" r="10"/>
+        <circle class="node-branch" cx="60" cy="200" r="10"/>
+        <circle class="node-branch" cx="340" cy="200" r="10"/>
+        <text class="node-label" x="80" y="76" text-anchor="middle">branch</text>
+        <text class="node-label" x="320" y="76" text-anchor="middle">branch</text>
+        <text class="node-label" x="80" y="336" text-anchor="middle">branch</text>
+        <text class="node-label" x="320" y="336" text-anchor="middle">branch</text>
+        <text class="node-label" x="200" y="46" text-anchor="middle">branch</text>
+        <text class="node-label" x="60" y="220" text-anchor="middle">branch</text>
+        <text class="node-label" x="340" y="220" text-anchor="middle">branch</text>
+        <circle class="node-hub" cx="200" cy="200" r="22"/>
+        <text class="node-label" x="200" y="240" text-anchor="middle" fill="#0D9488" font-weight="600">DC / HUB</text>
+      </svg>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><div class="stat-num">5 yrs</div><div class="stat-label">Enterprise WAN &amp; SD-WAN</div></div>
+    <div class="stat"><div class="stat-num">4,000+</div><div class="stat-label">Live sites under operation</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Link types managed for failover</div></div>
+    <div class="stat"><div class="stat-num">CCNA</div><div class="stat-label">Cisco certified</div></div>
+  </section>
+
+  <section id="experience">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <span class="section-title">Experience</span>
+      <span class="section-rule"></span>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-period">Mar 2024 — Present</div>
+      <div>
+        <div class="exp-role">Network Engineer — SD-WAN, BGP, OSPF, MPLS, 4,000+ Site Operations</div>
+        <div class="exp-org">Inspira Enterprise · Bengaluru — operating and securing a 4,000+ site SD-WAN network for a Tier-1 public sector bank</div>
+        <ul class="exp-desc">
+          <li>Own BGP peering and routing stability over MPLS across 4,000+ live enterprise sites, resolving L3 routing incidents that directly affect branch-level connectivity.</li>
+          <li>Manage end-to-end SD-WAN operations, covering migration, deployment, and L3 troubleshooting.</li>
+          <li>Built application-aware firewall and QoS policies to protect business-critical traffic from congestion during peak load, reducing escalation volume on priority links.</li>
+          <li>Lead root-cause troubleshooting for WAN failover and load-balancing failures across five link types — MPLS, ILL, 4G, PPPoE, RF — as primary technical contact for OEM hardware escalations.</li>
+          <li>Drive remote-first new-site deployment, eliminating unnecessary on-site visits and compressing rollout timelines across a nationwide migration.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-period">Oct 2022 — Mar 2024</div>
+      <div>
+        <div class="exp-role">Network Engineer</div>
+        <div class="exp-org">Frontier Business Systems Pvt. Ltd. · Bengaluru — L2/L3 operations across enterprise multi-site environments</div>
+        <ul class="exp-desc">
+          <li>Owned L2/L3 support for switches, routers, and firewalls across multiple enterprise client sites, resolving connectivity and routing failures under SLA pressure.</li>
+          <li>Investigated and closed VPN and routing incident tickets, maintaining SLA compliance across a distributed client base.</li>
+          <li>Supported network audits and infrastructure documentation ahead of major client upgrades.</li>
+          <li>Coordinated escalations across internal and client teams to minimize downtime during infrastructure changes.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-period">Apr 2022 — Aug 2022</div>
+      <div>
+        <div class="exp-role">Network Engineer</div>
+        <div class="exp-org">Getronics · Chennai — production-environment switch and router support</div>
+        <ul class="exp-desc">
+          <li>Maintained switch and router uptime in a live production network, isolating faults before they escalated to service-impacting incidents.</li>
+          <li>Executed configuration changes and troubleshooting across core network infrastructure.</li>
+          <li>Escalated cross-team issues efficiently to protect network uptime SLAs.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-period">Dec 2020 — Jan 2022</div>
+      <div>
+        <div class="exp-role">Desktop Support Engineer</div>
+        <div class="exp-org">Yaway Technologies Private Limited · Chennai — end-user IT support that became the entry point into networking</div>
+        <ul class="exp-desc">
+          <li>Resolved hardware, software, and connectivity issues for end users, building the diagnostic instincts that carried directly into network engineering.</li>
+          <li>Gained hands-on exposure to LAN infrastructure and network troubleshooting that shaped the decision to specialize in networking.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cert-row" style="margin-top:32px;">
+      <div class="cert">
+        <div class="cert-name">Cisco CCNA</div>
+        <div class="cert-status">✓ Certified</div>
+      </div>
+      <div class="cert">
+        <div class="cert-name">B.E. Electrical &amp; Electronics Engineering</div>
+        <div class="cert-status">AVS Engineering College · 2016 – 2020</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="architecture">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <span class="section-title">Architecture</span>
+      <span class="section-rule"></span>
+    </div>
+    <p class="section-sub">Three diagrams — topology, multi-link failover, and QoS traffic prioritization — explained step by step.</p>
+
+    <div class="diagram-block">
+      <div style="font-family:var(--font-mono); font-size:13px; color:var(--signal-dim); margin-bottom:16px; font-weight:600;">Spoke-Hub Topology</div>
+      <svg class="diagram-svg" viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg">
+        <path d="M350,210 L150,110" stroke="#DCE3EC" stroke-width="1.5" fill="none"/>
+        <path d="M350,210 L550,110" stroke="#DCE3EC" stroke-width="1.5" fill="none"/>
+        <path d="M350,210 L150,310" stroke="#DCE3EC" stroke-width="1.5" fill="none"/>
+        <path d="M350,210 L550,310" stroke="#DCE3EC" stroke-width="1.5" fill="none"/>
+        <path d="M350,210 L350,60" stroke="#DCE3EC" stroke-width="1.5" fill="none"/>
+        <path d="M350,210 L350,360" stroke="#DCE3EC" stroke-width="1.5" fill="none"/>
+        <path d="M350,210 L100,210" stroke="#DCE3EC" stroke-width="1.5" fill="none"/>
+        <path d="M350,210 L600,210" stroke="#DCE3EC" stroke-width="1.5" fill="none"/>
+
+        <circle cx="150" cy="110" r="11" fill="#F1F5F9" stroke="#DCE3EC" stroke-width="1.5"/>
+        <circle cx="550" cy="110" r="11" fill="#F1F5F9" stroke="#DCE3EC" stroke-width="1.5"/>
+        <circle cx="150" cy="310" r="11" fill="#F1F5F9" stroke="#DCE3EC" stroke-width="1.5"/>
+        <circle cx="550" cy="310" r="11" fill="#F1F5F9" stroke="#DCE3EC" stroke-width="1.5"/>
+        <circle cx="350" cy="60" r="11" fill="#F1F5F9" stroke="#DCE3EC" stroke-width="1.5"/>
+        <circle cx="350" cy="360" r="11" fill="#F1F5F9" stroke="#DCE3EC" stroke-width="1.5"/>
+        <circle cx="100" cy="210" r="11" fill="#F1F5F9" stroke="#DCE3EC" stroke-width="1.5"/>
+        <circle cx="600" cy="210" r="11" fill="#F1F5F9" stroke="#DCE3EC" stroke-width="1.5"/>
+
+        <text x="150" y="90" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#64748B">Branch</text>
+        <text x="550" y="90" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#64748B">Branch</text>
+        <text x="150" y="335" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#64748B">Branch</text>
+        <text x="550" y="335" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#64748B">Branch</text>
+        <text x="350" y="42" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#64748B">Branch</text>
+        <text x="350" y="382" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#64748B">Branch</text>
+        <text x="100" y="192" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#64748B">Branch</text>
+        <text x="600" y="192" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#64748B">Branch</text>
+
+        <circle cx="350" cy="210" r="26" fill="#CCFBF1" stroke="#0D9488" stroke-width="2.5"/>
+        <text x="350" y="204" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#0F766E" font-weight="700">DC</text>
+        <text x="350" y="220" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#0F766E">vManage</text>
+      </svg>
+      <div class="diagram-caption">
+        <ol>
+          <li><b>Every branch edge tunnels back to one place</b> — the data center hub — instead of meshing directly with every other branch. That keeps site-to-site routing simple: one control point, not thousands of peer relationships.</li>
+          <li><b>vManage sits at the hub</b> as the control plane. It pushes policy — routing, QoS, security — to every branch edge, so a rule change is made once centrally, not 4,000 times manually.</li>
+          <li><b>Each spoke carries its own set of physical links underneath</b> — that's what the next diagram breaks down.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="diagram-block">
+      <div style="font-family:var(--font-mono); font-size:13px; color:var(--signal-dim); margin-bottom:16px; font-weight:600;">Multi-Link Failover Order</div>
+      <svg class="diagram-svg" viewBox="0 0 700 620" xmlns="http://www.w3.org/2000/svg">
+        <rect x="270" y="10" width="160" height="50" rx="6" fill="#CCFBF1" stroke="#0D9488" stroke-width="2"/>
+        <text x="350" y="40" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#0F766E" font-weight="700">Branch Edge</text>
+
+        <path d="M350,60 L350,90" stroke="#DCE3EC" stroke-width="1.5"/>
+
+        <rect x="250" y="90" width="200" height="46" rx="6" fill="#CCFBF1" stroke="#0D9488" stroke-width="2"/>
+        <text x="350" y="118" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#0F766E" font-weight="700">1 · MPLS — primary</text>
+
+        <path d="M350,136 L350,160" stroke="#0D9488" stroke-width="2"/>
+        <text x="365" y="152" font-family="IBM Plex Mono" font-size="10" fill="#0D9488">up → traffic stays here</text>
+        <path d="M240,148 L200,180" stroke="#D97706" stroke-width="1.5" fill="none" stroke-dasharray="3 3"/>
+        <text x="70" y="145" font-family="IBM Plex Mono" font-size="10" fill="#D97706">down ↓</text>
+
+        <rect x="250" y="180" width="200" height="46" rx="6" fill="#FFFFFF" stroke="#DCE3EC" stroke-width="1.5"/>
+        <text x="350" y="208" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#1E293B">2 · ILL — backup</text>
+
+        <path d="M240,238 L200,270" stroke="#D97706" stroke-width="1.5" fill="none" stroke-dasharray="3 3"/>
+        <text x="70" y="235" font-family="IBM Plex Mono" font-size="10" fill="#D97706">down ↓</text>
+
+        <rect x="250" y="270" width="200" height="46" rx="6" fill="#FFFFFF" stroke="#DCE3EC" stroke-width="1.5"/>
+        <text x="350" y="298" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#1E293B">3 · 4G — failover</text>
+
+        <path d="M240,328 L200,360" stroke="#D97706" stroke-width="1.5" fill="none" stroke-dasharray="3 3"/>
+        <text x="70" y="325" font-family="IBM Plex Mono" font-size="10" fill="#D97706">down ↓</text>
+
+        <rect x="250" y="360" width="200" height="46" rx="6" fill="#FFFFFF" stroke="#DCE3EC" stroke-width="1.5"/>
+        <text x="350" y="388" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#1E293B">4 · PPPoE — failover</text>
+
+        <path d="M240,418 L200,450" stroke="#D97706" stroke-width="1.5" fill="none" stroke-dasharray="3 3"/>
+        <text x="70" y="415" font-family="IBM Plex Mono" font-size="10" fill="#D97706">down ↓</text>
+
+        <rect x="250" y="450" width="200" height="46" rx="6" fill="#FFFFFF" stroke="#DCE3EC" stroke-width="1.5"/>
+        <text x="350" y="478" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#1E293B">5 · RF — last resort</text>
+
+        <path d="M350,136 L350,180" stroke="#DCE3EC" stroke-width="1.5"/>
+        <path d="M350,226 L350,270" stroke="#DCE3EC" stroke-width="1.5"/>
+        <path d="M350,316 L350,360" stroke="#DCE3EC" stroke-width="1.5"/>
+        <path d="M350,406 L350,450" stroke="#DCE3EC" stroke-width="1.5"/>
+
+        <path d="M350,496 L350,530" stroke="#0D9488" stroke-width="2"/>
+        <rect x="250" y="530" width="200" height="50" rx="6" fill="#CCFBF1" stroke="#0D9488" stroke-width="2"/>
+        <text x="350" y="560" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#0F766E" font-weight="700">Data Center</text>
+      </svg>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-swatch" style="background:#0D9488"></span>active link</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#D97706"></span>failover trigger</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#94A3B8"></span>standby link</div>
+      </div>
+      <div class="diagram-caption">
+        <ol>
+          <li><b>MPLS is primary</b> — carries traffic under normal conditions because it's the most stable, lowest-latency path.</li>
+          <li><b>If MPLS goes down, the edge fails over to ILL</b> — a leased-line backup, next in reliability.</li>
+          <li><b>If ILL is also unavailable, 4G takes over</b> — wireless, higher latency, but keeps critical traffic moving.</li>
+          <li><b>PPPoE is the next fallback</b>, used when the broadband/DSL path is the only thing left standing.</li>
+          <li><b>RF is the last resort</b> — brought in only when every wired and cellular option has failed, to avoid a full site outage.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="diagram-block">
+      <div style="font-family:var(--font-mono); font-size:13px; color:var(--signal-dim); margin-bottom:16px; font-weight:600;">QoS — Application-Aware Traffic Prioritization</div>
+      <svg class="diagram-svg" viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="20" width="160" height="46" rx="6" fill="#CCFBF1" stroke="#0D9488" stroke-width="2"/>
+        <text x="90" y="48" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#0F766E" font-weight="700">Voice / Video</text>
+
+        <rect x="10" y="147" width="160" height="46" rx="6" fill="#FEF3E2" stroke="#D97706" stroke-width="1.5"/>
+        <text x="90" y="175" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#B45309" font-weight="700">Business Apps</text>
+
+        <rect x="10" y="274" width="160" height="46" rx="6" fill="#FFFFFF" stroke="#DCE3EC" stroke-width="1.5"/>
+        <text x="90" y="302" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#64748B" font-weight="700">Best Effort</text>
+
+        <path d="M170,43 L280,110" stroke="#0D9488" stroke-width="2" fill="none"/>
+        <path d="M170,170 L280,140" stroke="#D97706" stroke-width="1.5" fill="none"/>
+        <path d="M170,297 L280,170" stroke="#94A3B8" stroke-width="1.5" fill="none"/>
+
+        <rect x="280" y="90" width="150" height="100" rx="6" fill="#FFFFFF" stroke="#1E293B" stroke-width="1.5"/>
+        <text x="355" y="130" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#1E293B" font-weight="700">QoS Policy</text>
+        <text x="355" y="146" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#1E293B" font-weight="700">Engine</text>
+        <text x="355" y="168" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#64748B">classify + queue</text>
+
+        <path d="M430,105 L520,60" stroke="#0D9488" stroke-width="2" fill="none"/>
+        <path d="M430,140 L520,140" stroke="#D97706" stroke-width="1.5" fill="none"/>
+        <path d="M430,175 L520,220" stroke="#94A3B8" stroke-width="1.5" fill="none"/>
+
+        <rect x="520" y="36" width="150" height="42" rx="5" fill="#CCFBF1" stroke="#0D9488" stroke-width="2"/>
+        <text x="595" y="62" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#0F766E" font-weight="700">High-priority queue</text>
+
+        <rect x="520" y="119" width="150" height="42" rx="5" fill="#FEF3E2" stroke="#D97706" stroke-width="1.5"/>
+        <text x="595" y="145" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#B45309" font-weight="700">Medium queue</text>
+
+        <rect x="520" y="199" width="150" height="42" rx="5" fill="#FFFFFF" stroke="#DCE3EC" stroke-width="1.5"/>
+        <text x="595" y="225" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#64748B" font-weight="700">Best-effort queue</text>
+
+        <text x="355" y="270" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#64748B">During congestion, the high-priority queue drains first — voice and business-critical traffic cross before best-effort does.</text>
+      </svg>
+      <div class="diagram-caption">
+        <ol>
+          <li><b>All traffic hits the QoS engine first</b>, where it's classified by application — not just by port or protocol, but by what the traffic actually is.</li>
+          <li><b>Voice and video get the high-priority queue</b> — they're the most sensitive to delay and jitter, so they're protected first.</li>
+          <li><b>Core business applications sit in a medium queue</b> — protected from congestion, but behind real-time traffic.</li>
+          <li><b>Everything else — bulk transfers, general browsing — goes into best-effort</b> and absorbs the congestion when a link is under load, instead of critical traffic being the one that suffers.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <span class="section-title">Technical Skills</span>
+      <span class="section-rule"></span>
+    </div>
+    <div class="skill-grid">
+      <div class="skill-cat">
+        <div class="skill-cat-title">Networking</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Switching</span><span class="skill-tag">Routing</span><span class="skill-tag">VLANs</span>
+          <span class="skill-tag">VTP</span><span class="skill-tag">NAT</span><span class="skill-tag">STP</span>
+          <span class="skill-tag">SNMP</span><span class="skill-tag">NTP</span><span class="skill-tag">Telnet/SSH</span>
+          <span class="skill-tag">ACLs</span><span class="skill-tag">DNS/DHCP</span><span class="skill-tag">OSI Model</span>
+          <span class="skill-tag">IP Phones</span><span class="skill-tag">802.1X/802.1Q</span><span class="skill-tag">Firewall Clustering</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Protocols</div>
+        <div class="skill-tags">
+          <span class="skill-tag">EIGRP</span><span class="skill-tag">OSPF</span><span class="skill-tag">BGP</span>
+          <span class="skill-tag">TCP/IP</span><span class="skill-tag">UDP</span>
+          <span class="skill-tag">Cisco / Tejas / HP Upgrades</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Technologies</div>
+        <div class="skill-tags">
+          <span class="skill-tag">AAA</span><span class="skill-tag">Aruba ClearPass</span>
+          <span class="skill-tag">RADIUS</span><span class="skill-tag">TACACS</span><span class="skill-tag">NAC</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">SD-WAN</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Spoke-Hub Architecture</span><span class="skill-tag">Cloud Station / Insights</span>
+          <span class="skill-tag">Cloud Port Gateway / Edge</span><span class="skill-tag">Control / Data Plane</span>
+          <span class="skill-tag">LAN/WAN</span><span class="skill-tag">MPLS</span><span class="skill-tag">Broadband</span>
+          <span class="skill-tag">ILL</span><span class="skill-tag">4G</span><span class="skill-tag">PPPoE</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Security &amp; File Transfer</div>
+        <div class="skill-tags">
+          <span class="skill-tag">NAT</span><span class="skill-tag">Firewall Policies</span><span class="skill-tag">QoS</span>
+          <span class="skill-tag">SFTP</span><span class="skill-tag">TFTP</span><span class="skill-tag">FTP</span><span class="skill-tag">DMZ</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Tools &amp; Ticketing</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Everest IMS-NCCM</span><span class="skill-tag">Aruba ClearPass Policy Manager</span>
+          <span class="skill-tag">Cisco LMS</span><span class="skill-tag">AnyDesk</span><span class="skill-tag">TeamViewer</span>
+          <span class="skill-tag">BMC Remedy</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-head">
+      <span class="section-num">·</span>
+      <span class="section-title">Get in touch</span>
+      <span class="section-rule"></span>
+    </div>
+    <div class="contact-box">
+      <h2>Let's connect</h2>
+      <p>Open to conversations on SD-WAN, enterprise routing, and network operations at scale.</p>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/mohammed-ghouse150898" class="btn btn-primary" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="mailto:mohammedghousemdg@gmail.com" class="btn btn-ghost">Email</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer><div class="wrap">// built for the field, not the podium</div></footer>
+</body>
+</html>
