@@ -1,1 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mohammed Ghouse — Network Engineer | SD-WAN, BGP, OSPF, MPLS</title>
+<meta name="description" content="Network Engineer with 5 years in enterprise WAN and SD-WAN — BGP, OSPF, MPLS, QoS, and multi-link failover across 4,000+ sites." />
+<meta property="og:title" content="Mohammed Ghouse — Network Engineer" />
+<meta property="og:description" content="5 years in enterprise WAN and SD-WAN. BGP, OSPF, MPLS, QoS across 4,000+ sites." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" />
+<style>
+:root{
+  --bg:#F8FAFC; --surface:#FFFFFF; --surface-2:#F1F5F9; --line:#DCE3EC;
+  --text:#1E293B; --text-muted:#64748B;
+  --signal:#0D9488; --signal-dim:#0F766E; --signal-tint:#CCFBF1;
+  --alert:#D97706;
+  --font-mono:'IBM Plex Mono',monospace; --font-sans:'IBM Plex Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.6;min-height:100vh}
+::selection{background:var(--signal-tint);color:var(--signal-dim)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+header{position:sticky;top:0;z-index:50;background:rgba(248,250,252,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;max-width:1080px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:10px}
+.logo .dot{width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 8px var(--signal-tint);flex-shrink:0}
+.logo-name{font-weight:700;font-size:16px;color:var(--text);line-height:1.1}
+.logo-role{font-family:var(--font-mono);font-size:10.5px;color:var(--text-muted);letter-spacing:.04em}
+.navlinks{display:flex;gap:26px;font-family:var(--font-mono);font-size:13px;color:var(--text-muted)}
+.navlinks a:hover{color:var(--signal)}
+@media(max-width:700px){.navlinks{gap:14px;font-size:11.5px}}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;color:var(--signal-dim);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--signal)}
+h1{font-family:var(--font-mono);font-weight:700;font-size:clamp(28px,4.4vw,44px);line-height:1.15;letter-spacing:-.01em;margin-bottom:20px;color:var(--text)}
+h1 .accent{color:var(--signal)}
+.lede{color:var(--text-muted);font-size:16.5px;max-width:58ch;margin-bottom:28px}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap}
+.btn{font-family:var(--font-mono);font-size:13px;font-weight:600;padding:13px 22px;border-radius:4px;border:1.5px solid var(--signal);display:inline-flex;align-items:center;gap:8px;transition:all .2s ease;cursor:pointer}
+.btn-primary{background:var(--signal);color:#fff}
+.btn-primary:hover{background:var(--signal-dim);border-color:var(--signal-dim)}
+.btn-ghost{border-color:var(--line);color:var(--text-muted);background:var(--surface)}
+.btn-ghost:hover{border-color:var(--signal);color:var(--signal)}
+.hero{padding:80px 0 50px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding-top:50px}}
+.topo{position:relative;aspect-ratio:1/1;max-width:420px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.topo svg{width:100%;height:100%}
+.link-path{stroke:var(--line);stroke-width:1.5;fill:none}
+.link-pulse{stroke:var(--signal);stroke-width:2;fill:none;stroke-dasharray:6 220;stroke-dashoffset:0;animation:flow 3.2s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-226}}
+.node-hub{fill:var(--signal-tint);stroke:var(--signal);stroke-width:2}
+.node-branch{fill:var(--surface-2);stroke:var(--line);stroke-width:1.5}
+.node-label{font-family:var(--font-mono);font-size:9px;fill:var(--text-muted)}
+.stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr)}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{padding:26px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:none}
+.stat-num{font-family:var(--font-mono);font-weight:700;font-size:26px;color:var(--signal)}
+.stat-label{font-size:12px;color:var(--text-muted);margin-top:4px}
+section{padding:70px 0}
+.section-head{display:flex;align-items:baseline;gap:16px;margin-bottom:14px}
+.section-num{font-family:var(--font-mono);color:var(--signal);font-size:14px}
+.section-title{font-family:var(--font-mono);font-weight:700;font-size:22px;color:var(--text)}
+.section-rule{flex:1;height:1px;background:var(--line)}
+.section-sub{color:var(--text-muted);font-size:14.5px;margin:0 0 32px;max-width:66ch}
+.exp-item{display:grid;grid-template-columns:150px 1fr;gap:24px;padding:26px 0;border-bottom:1px solid var(--line)}
+@media(max-width:640px){.exp-item{grid-template-columns:1fr;gap:8px}}
+.exp-period{font-family:var(--font-mono);font-size:12px;color:var(--signal-dim);white-space:nowrap}
+.exp-role{font-weight:700;font-size:16.5px;margin-bottom:2px;color:var(--text)}
+.exp-org{color:var(--text-muted);font-size:13.5px;margin-bottom:12px}
+.exp-desc li{margin-left:18px;margin-bottom:6px;color:var(--text-muted);font-size:14px;max-width:66ch}
+.diagram-block{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:30px;margin-bottom:20px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.diagram-block h3{font-family:var(--font-mono);font-size:15px;margin-bottom:18px;color:var(--text)}
+.diagram-svg{width:100%;height:auto;display:block}
+.diagram-caption{margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.diagram-caption ol{margin-left:20px;color:var(--text-muted);font-size:13.5px}
+.diagram-caption li{margin-bottom:6px}
+.diagram-caption li b{color:var(--text)}
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;font-family:var(--font-mono);font-size:11px;color:var(--text-muted)}
+.legend-item{display:flex;align-items:center;gap:7px}
+.legend-swatch{width:14px;height:3px;border-radius:2px}
+.skill-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+@media(max-width:760px){.skill-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.skill-grid{grid-template-columns:1fr}}
+.skill-cat{background:var(--surface);padding:22px}
+.skill-cat-title{font-family:var(--font-mono);font-size:11px;letter-spacing:.07em;color:var(--alert);text-transform:uppercase;margin-bottom:12px}
+.skill-tags{display:flex;flex-wrap:wrap;gap:7px}
+.skill-tag{font-family:var(--font-mono);font-size:11.5px;color:var(--text-muted);border:1px solid var(--line);padding:5px 9px;border-radius:4px;background:var(--surface-2)}
+.cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+@media(max-width:900px){.cert-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.cert-grid{grid-template-columns:1fr}}
+.cert-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;transition:all .2s ease}
+.cert-card:hover{border-color:var(--signal);transform:translateY(-2px);box-shadow:0 8px 24px -12px rgba(13,148,136,.35)}
+.cert-status{font-family:var(--font-mono);font-size:10.5px;color:var(--signal);letter-spacing:.06em;margin-bottom:10px;text-transform:uppercase}
+.cert-name{font-weight:700;font-size:14.5px;line-height:1.35;color:var(--text);margin-bottom:6px}
+.cert-meta{font-family:var(--font-mono);font-size:11px;color:var(--signal-dim);margin-bottom:10px}
+.cert-desc{font-size:13px;color:var(--text-muted);line-height:1.5}
+.contact-box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:44px;text-align:center}
+.contact-box h2{font-family:var(--font-mono);font-size:24px;margin-bottom:12px;color:var(--text)}
+.contact-box p{color:var(--text-muted);margin-bottom:24px}
+.contact-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+footer{padding:28px 0;text-align:center;color:var(--text-muted);font-family:var(--font-mono);font-size:12px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<header>
+  <nav>
+    <a href="#home" class="logo">
+      <span class="dot"></span>
+      <div>
+        <div class="logo-name">Mohammed Ghouse</div>
+        <div class="logo-role">NETWORK ENGINEER</div>
+      </div>
+    </a>
+    <div class="navlinks">
+      <a href="#home">home</a>
+      <a href="#experience">experience</a>
+      <a href="#architecture">architecture</a>
+      <a href="#skills">skills</a>
+      <a href="#contact">contact</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero wrap" id="home">
+  <div>
+    <div class="eyebrow">Network Engineer · Bengaluru, IN</div>
+    <h1>I keep networks running when everything is trying to <span class="accent">bring them down.</span></h1>
+    <p class="lede">5 years in enterprise WAN and SD-WAN. My work sits at the intersection of routing protocols and business continuity — BGP, OSPF, MPLS, QoS policy design, and multi-link failover across ILL, MPLS, 4G, PPPoE, and RF, in environments where downtime is a financial and reputational risk, not an inconvenience.</p>
+    <p class="lede" style="margin-top:-12px">Cisco CCNA certified, with recent coursework in <b style="color:var(--signal-dim)">Implementing Cisco SD-WAN for Enterprise &amp; Cloud</b>, CCNP ENCOR &amp; ENARSI, and CompTIA Network+.</p>
+    <div class="cta-row">
+      <a href="#contact" class="btn btn-primary">Get in touch →</a>
+      <a href="#experience" class="btn btn-ghost">View experience</a>
+    </div>
+  </div>
+  <div class="topo"><div id="topo-mount"></div></div>
+</section>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><div class="stat-num">5 yrs</div><div class="stat-label">Enterprise WAN &amp; SD-WAN</div></div>
+    <div class="stat"><div class="stat-num">4,000+</div><div class="stat-label">Live sites under operation</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Link types managed for failover</div></div>
+    <div class="stat"><div class="stat-num">CCNA</div><div class="stat-label">Cisco certified</div></div>
+  </div>
+</div>
+
+<section id="experience" class="wrap">
+  <div class="section-head"><span class="section-num">01</span><span class="section-title">Experience</span><span class="section-rule"></span></div>
+
+  <div class="exp-item">
+    <div class="exp-period">Mar 2024 — Present</div>
+    <div>
+      <div class="exp-role">Network Engineer — SD-WAN, BGP, OSPF, MPLS, 4,000+ Site Operations</div>
+      <div class="exp-org">Inspira Enterprise · Bengaluru — operating and securing a 4,000+ site SD-WAN network for a Tier-1 public sector bank</div>
+      <ul class="exp-desc">
+        <li>Own BGP peering and routing stability over MPLS across 4,000+ live enterprise sites, resolving L3 routing incidents that directly affect branch-level connectivity.</li>
+        <li>Manage end-to-end SD-WAN operations, covering migration, deployment, and L3 troubleshooting.</li>
+        <li>Built application-aware firewall and QoS policies to protect business-critical traffic from congestion during peak load, reducing escalation volume on priority links.</li>
+        <li>Lead root-cause troubleshooting for WAN failover and load-balancing failures across five link types — MPLS, ILL, 4G, PPPoE, RF — as primary technical contact for OEM hardware escalations.</li>
+        <li>Drive remote-first new-site deployment, eliminating unnecessary on-site visits and compressing rollout timelines across a nationwide migration.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-period">Oct 2022 — Mar 2024</div>
+    <div>
+      <div class="exp-role">Network Engineer</div>
+      <div class="exp-org">Frontier Business Systems Pvt. Ltd. · Bengaluru — L2/L3 operations across enterprise multi-site environments</div>
+      <ul class="exp-desc">
+        <li>Owned L2/L3 support for switches, routers, and firewalls across multiple enterprise client sites, resolving connectivity and routing failures under SLA pressure.</li>
+        <li>Investigated and closed VPN and routing incident tickets, maintaining SLA compliance across a distributed client base.</li>
+        <li>Supported network audits and infrastructure documentation ahead of major client upgrades.</li>
+        <li>Coordinated escalations across internal and client teams to minimize downtime during infrastructure changes.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-period">Apr 2022 — Aug 2022</div>
+    <div>
+      <div class="exp-role">Network Engineer</div>
+      <div class="exp-org">Getronics · Chennai — production-environment switch and router support</div>
+      <ul class="exp-desc">
+        <li>Maintained switch and router uptime in a live production network, isolating faults before they escalated to service-impacting incidents.</li>
+        <li>Executed configuration changes and troubleshooting across core network infrastructure.</li>
+        <li>Escalated cross-team issues efficiently to protect network uptime SLAs.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-period">Dec 2020 — Jan 2022</div>
+    <div>
+      <div class="exp-role">Desktop Support Engineer</div>
+      <div class="exp-org">Yaway Technologies Private Limited · Chennai — end-user IT support that became the entry point into networking</div>
+      <ul class="exp-desc">
+        <li>Resolved hardware, software, and connectivity issues for end users, building the diagnostic instincts that carried directly into network engineering.</li>
+        <li>Gained hands-on exposure to LAN infrastructure and network troubleshooting that shaped the decision to specialize in networking.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top:40px">
+    <div class="section-head"><span class="section-num">·</span><span class="section-title">Certifications &amp; Education</span><span class="section-rule"></span></div>
+    <div class="cert-grid" id="cert-grid"></div>
+  </div>
+</section>
+
+<section id="architecture" class="wrap">
+  <div class="section-head"><span class="section-num">02</span><span class="section-title">Architecture</span><span class="section-rule"></span></div>
+  <p class="section-sub">Three diagrams — topology, multi-link failover, and QoS traffic prioritization — explained step by step.</p>
+
+  <div class="diagram-block">
+    <h3>Spoke-Hub Topology</h3>
+    <div id="spoke-mount"></div>
+    <div class="diagram-caption"><ol>
+      <li><b>One control point, not thousands of peers.</b> Every branch edge tunnels back to one place — the data center hub — instead of meshing directly with every other branch.</li>
+      <li><b>vManage sits at the hub as the control plane.</b> It pushes policy — routing, QoS, security — so a rule change is made once centrally, not 4,000 times manually.</li>
+      <li><b>Each spoke carries its own physical links underneath</b> — that's what the next diagram breaks down.</li>
+    </ol></div>
+  </div>
+
+  <div class="diagram-block">
+    <h3>Multi-Link Failover Order</h3>
+    <div id="failover-mount"></div>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--signal)"></span>active link</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--alert)"></span>failover trigger</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--line)"></span>standby link</div>
+    </div>
+    <div class="diagram-caption"><ol>
+      <li><b>MPLS is primary</b> — carries traffic under normal conditions because it's the most stable, lowest-latency path.</li>
+      <li><b>ILL is backup</b> — leased-line fallback if MPLS goes down.</li>
+      <li><b>4G takes over next</b> — wireless, higher latency, but keeps critical traffic moving.</li>
+      <li><b>PPPoE is the next fallback</b> — broadband/DSL when the wired backup is gone.</li>
+      <li><b>RF is the last resort</b> — brought in only when every wired and cellular option has failed.</li>
+    </ol></div>
+  </div>
+
+  <div class="diagram-block">
+    <h3>QoS — Application-Aware Traffic Prioritization</h3>
+    <div id="qos-mount"></div>
+    <div class="diagram-caption"><ol>
+      <li><b>All traffic hits the QoS engine first,</b> where it's classified by application — not just by port or protocol.</li>
+      <li><b>Voice and video go to the high-priority queue</b> — most sensitive to delay and jitter, so protected first.</li>
+      <li><b>Core business apps sit in a medium queue</b> — protected from congestion, behind real-time traffic.</li>
+      <li><b>Everything else drops to best-effort</b> — bulk transfers absorb congestion so critical traffic doesn't suffer.</li>
+    </ol></div>
+  </div>
+</section>
+
+<section id="skills" class="wrap">
+  <div class="section-head"><span class="section-num">03</span><span class="section-title">Technical Skills</span><span class="section-rule"></span></div>
+  <div class="skill-grid" id="skill-grid"></div>
+</section>
+
+<section id="contact" class="wrap">
+  <div class="section-head"><span class="section-num">·</span><span class="section-title">Get in touch</span><span class="section-rule"></span></div>
+  <div class="contact-box">
+    <h2>Let's connect</h2>
+    <p>Open to conversations on SD-WAN, enterprise routing, and network operations at scale.</p>
+    <div class="contact-links">
+      <a href="#" class="btn btn-primary">LinkedIn ↗</a>
+      <a href="mailto:hello@example.com" class="btn btn-ghost">Email</a>
+    </div>
+  </div>
+</section>
+
+<footer>// built for the field, not the podium</footer>
+
+<script>
+const SVGNS = "http://www.w3.org/2000/svg";
+function el(tag, attrs = {}, children = []) {
+  const n = document.createElementNS(SVGNS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  (Array.isArray(children) ? children : [children]).forEach(c => c && n.appendChild(typeof c === "string" ? document.createTextNode(c) : c));
+  return n;
+}
+function defs() {
+  return el("defs", {}, [
+    (() => { const p = el("pattern", {id:"grid", width:24, height:24, patternUnits:"userSpaceOnUse"}); p.appendChild(el("path",{d:"M 24 0 L 0 0 0 24", fill:"none", stroke:"var(--line)", "stroke-width":0.5, opacity:0.5})); return p; })(),
+    (() => { const g = el("radialGradient",{id:"hubGlow", cx:"50%", cy:"50%", r:"50%"}); g.appendChild(el("stop",{offset:"0%","stop-color":"var(--signal)","stop-opacity":0.35})); g.appendChild(el("stop",{offset:"100%","stop-color":"var(--signal)","stop-opacity":0})); return g; })(),
+    (() => { const g = el("linearGradient",{id:"activeLink", x1:0, x2:1}); g.appendChild(el("stop",{offset:"0%","stop-color":"var(--signal)","stop-opacity":0.3})); g.appendChild(el("stop",{offset:"50%","stop-color":"var(--signal)","stop-opacity":1})); g.appendChild(el("stop",{offset:"100%","stop-color":"var(--signal)","stop-opacity":0.3})); return g; })(),
+    (() => { const m = el("marker",{id:"arrow", viewBox:"0 0 10 10", refX:8, refY:5, markerWidth:6, markerHeight:6, orient:"auto"}); m.appendChild(el("path",{d:"M0,0 L10,5 L0,10 Z", fill:"var(--signal)"})); return m; })(),
+    (() => { const m = el("marker",{id:"arrowMuted", viewBox:"0 0 10 10", refX:8, refY:5, markerWidth:5, markerHeight:5, orient:"auto"}); m.appendChild(el("path",{d:"M0,0 L10,5 L0,10 Z", fill:"var(--text-muted)", opacity:0.5})); return m; })()
+  ]);
+}
+
+// Hero topology
+(function(){
+  const svg = el("svg",{viewBox:"0 0 400 400", xmlns:SVGNS});
+  const cx=200, cy=200, r=150;
+  const branches = Array.from({length:8},(_,i)=>{const a=(i/8)*Math.PI*2-Math.PI/2;return{x:cx+Math.cos(a)*r, y:cy+Math.sin(a)*r, i};});
+  branches.forEach(b => svg.appendChild(el("line",{class:"link-path", x1:cx, y1:cy, x2:b.x, y2:b.y})));
+  branches.forEach(b => { const l=el("line",{class:"link-pulse", x1:cx, y1:cy, x2:b.x, y2:b.y}); l.style.animationDelay=(b.i*0.4)+"s"; svg.appendChild(l); });
+  branches.forEach(b => {
+    svg.appendChild(el("circle",{class:"node-branch", cx:b.x, cy:b.y, r:14}));
+    svg.appendChild(el("text",{class:"node-label", x:b.x, y:b.y+28, "text-anchor":"middle"}, "branch"));
+  });
+  svg.appendChild(el("circle",{class:"node-hub", cx, cy, r:26}));
+  const t=el("text",{class:"node-label", x:cx, y:cy+44, "text-anchor":"middle"}, "DC / HUB");
+  t.style.fill="var(--signal-dim)"; t.style.fontWeight=700;
+  svg.appendChild(t);
+  const mount = document.getElementById("topo-mount");
+  mount.parentNode.replaceChild(svg, mount);
+})();
+
+// Spoke-hub diagram
+(function(){
+  const svg = el("svg",{class:"diagram-svg", viewBox:"0 0 600 420", xmlns:SVGNS});
+  svg.appendChild(defs());
+  svg.appendChild(el("rect",{width:600,height:420,fill:"url(#grid)"}));
+  const cx=340, cy=200, r=140;
+  svg.appendChild(el("circle",{cx,cy,r:70,fill:"url(#hubGlow)"}));
+  const branches = Array.from({length:8},(_,i)=>{const a=(i/8)*Math.PI*2-Math.PI/2;return{x:cx+Math.cos(a)*r, y:cy+Math.sin(a)*r, i};});
+  branches.forEach(b => svg.appendChild(el("line",{class:"link-path",x1:cx,y1:cy,x2:b.x,y2:b.y})));
+  branches.forEach(b => { const l=el("line",{class:"link-pulse",x1:cx,y1:cy,x2:b.x,y2:b.y}); l.style.animationDelay=(b.i*0.35)+"s"; svg.appendChild(l); });
+  branches.forEach(b => {
+    svg.appendChild(el("circle",{cx:b.x,cy:b.y,r:18,fill:"var(--surface)",stroke:"var(--signal)","stroke-width":1.5}));
+    svg.appendChild(el("circle",{cx:b.x,cy:b.y,r:5,fill:"var(--signal)"}));
+    const t=el("text",{class:"node-label",x:b.x,y:b.y+34,"text-anchor":"middle"},`Branch ${b.i+1}`); t.style.fontWeight=600; svg.appendChild(t);
+  });
+  svg.appendChild(el("circle",{cx,cy,r:34,fill:"var(--signal)"}));
+  svg.appendChild(el("circle",{cx,cy,r:34,fill:"none",stroke:"var(--signal-tint)","stroke-width":4,opacity:0.6}));
+  const hubT=el("text",{x:cx,y:cy+2,"text-anchor":"middle"},"DC HUB");
+  Object.assign(hubT.style,{fill:"#fff",fontWeight:700,fontSize:"12px",fontFamily:"var(--font-mono)"});
+  svg.appendChild(hubT);
+  const hubS=el("text",{x:cx,y:cy+15,"text-anchor":"middle",class:"node-label"},"4000+ sites"); hubS.style.fill="var(--signal-tint)"; svg.appendChild(hubS);
+  svg.appendChild(el("rect",{x:30,y:30,width:130,height:70,rx:8,fill:"var(--surface)",stroke:"var(--signal)","stroke-width":1.5}));
+  const vm=el("text",{x:95,y:55,"text-anchor":"middle"},"vManage"); Object.assign(vm.style,{fill:"var(--signal-dim)",fontWeight:700,fontSize:"12px",fontFamily:"var(--font-mono)"}); svg.appendChild(vm);
+  svg.appendChild(el("text",{x:95,y:72,"text-anchor":"middle",class:"node-label"},"control plane"));
+  const cp=el("text",{x:95,y:87,"text-anchor":"middle",class:"node-label"},"policy · routing · QoS"); cp.style.fill="var(--signal)"; svg.appendChild(cp);
+  svg.appendChild(el("line",{x1:160,y1:65,x2:cx-30,y2:cy-20,stroke:"var(--signal)","stroke-dasharray":"5 4","stroke-width":1.5,"marker-end":"url(#arrow)"}));
+  document.getElementById("spoke-mount").appendChild(svg);
+})();
+
+// Failover diagram
+(function(){
+  const links = [
+    {label:"MPLS", tag:"primary", state:"active"},
+    {label:"ILL", tag:"backup", state:"standby"},
+    {label:"4G", tag:"failover", state:"standby"},
+    {label:"PPPoE", tag:"failover", state:"standby"},
+    {label:"RF", tag:"last resort", state:"standby"}
+  ];
+  const svg = el("svg",{class:"diagram-svg", viewBox:"0 0 600 460", xmlns:SVGNS});
+  svg.appendChild(defs());
+  svg.appendChild(el("rect",{width:600,height:460,fill:"url(#grid)"}));
+  svg.appendChild(el("rect",{x:20,y:200,width:120,height:70,rx:8,fill:"var(--surface)",stroke:"var(--signal)","stroke-width":1.5}));
+  const be=el("text",{x:80,y:230,"text-anchor":"middle"},"Branch Edge"); Object.assign(be.style,{fontWeight:700,fill:"var(--text)",fontSize:"12px",fontFamily:"var(--font-mono)"}); svg.appendChild(be);
+  svg.appendChild(el("text",{x:80,y:248,"text-anchor":"middle",class:"node-label"},"SD-WAN router"));
+  const dot=el("circle",{cx:80,cy:262,r:3,fill:"var(--signal)"}); dot.appendChild(el("animate",{attributeName:"opacity",values:"1;0.3;1",dur:"1.5s",repeatCount:"indefinite"})); svg.appendChild(dot);
+  svg.appendChild(el("rect",{x:460,y:200,width:120,height:70,rx:8,fill:"var(--signal)",stroke:"var(--signal-dim)","stroke-width":1.5}));
+  const dc=el("text",{x:520,y:230,"text-anchor":"middle"},"Data Center"); Object.assign(dc.style,{fill:"#fff",fontWeight:700,fontSize:"12px",fontFamily:"var(--font-mono)"}); svg.appendChild(dc);
+  const ca=el("text",{x:520,y:248,"text-anchor":"middle",class:"node-label"},"core apps"); ca.style.fill="var(--signal-tint)"; svg.appendChild(ca);
+  links.forEach((l,i)=>{
+    const y=40+i*78, active=l.state==="active", stroke=active?"var(--signal)":"var(--text-muted)";
+    svg.appendChild(el("line",{x1:140,y1:230,x2:200,y2:y+22,stroke,"stroke-width":active?2.5:1.2,"stroke-dasharray":active?"0":"3 4",opacity:active?1:0.45}));
+    svg.appendChild(el("line",{x1:400,y1:y+22,x2:460,y2:230,stroke,"stroke-width":active?2.5:1.2,"stroke-dasharray":active?"0":"3 4",opacity:active?1:0.45,"marker-end":active?"url(#arrow)":"url(#arrowMuted)"}));
+    if(active) svg.appendChild(el("line",{x1:140,y1:230,x2:460,y2:230,stroke:"url(#activeLink)","stroke-width":1,opacity:0.6}));
+    svg.appendChild(el("rect",{x:200,y,width:200,height:44,rx:6,fill:active?"var(--signal-tint)":"var(--surface)",stroke:active?"var(--signal)":"var(--line)","stroke-width":active?1.5:1}));
+    svg.appendChild(el("circle",{cx:218,cy:y+22,r:11,fill:active?"var(--signal)":"var(--surface-2)",stroke:active?"var(--signal-dim)":"var(--line)"}));
+    const num=el("text",{x:218,y:y+26,"text-anchor":"middle"},String(i+1)); Object.assign(num.style,{fontFamily:"var(--font-mono)",fontSize:"11px",fontWeight:700,fill:active?"#fff":"var(--text-muted)"}); svg.appendChild(num);
+    const lbl=el("text",{x:240,y:y+20},l.label); Object.assign(lbl.style,{fontFamily:"var(--font-mono)",fontSize:"13px",fontWeight:700,fill:active?"var(--signal-dim)":"var(--text)"}); svg.appendChild(lbl);
+    const tag=el("text",{x:240,y:y+35},l.tag); Object.assign(tag.style,{fontFamily:"var(--font-mono)",fontSize:"10px",fill:active?"var(--signal)":"var(--text-muted)",letterSpacing:"0.06em",textTransform:"uppercase"}); svg.appendChild(tag);
+    if(active){
+      const c=el("circle",{cx:385,cy:y+22,r:4,fill:"var(--signal)"}); c.appendChild(el("animate",{attributeName:"opacity",values:"1;0.2;1",dur:"1.4s",repeatCount:"indefinite"})); svg.appendChild(c);
+      const live=el("text",{x:378,y:y+26,"text-anchor":"end"},"LIVE"); Object.assign(live.style,{fontFamily:"var(--font-mono)",fontSize:"9px",fill:"var(--signal-dim)",fontWeight:600}); svg.appendChild(live);
+    } else {
+      const s=el("text",{x:385,y:y+26,"text-anchor":"end"},"standby"); Object.assign(s.style,{fontFamily:"var(--font-mono)",fontSize:"9px",fill:"var(--text-muted)",opacity:0.6}); svg.appendChild(s);
+    }
+  });
+  document.getElementById("failover-mount").appendChild(svg);
+})();
+
+// QoS diagram
+(function(){
+  const sources = [
+    {label:"Voice / Video", y:40, color:"var(--signal)", note:"real-time"},
+    {label:"Business Apps", y:130, color:"var(--alert)", note:"critical"},
+    {label:"Bulk / Browsing", y:220, color:"var(--text-muted)", note:"best effort"}
+  ];
+  const queues = [
+    {label:"High-priority", y:50, color:"var(--signal)", w:170},
+    {label:"Medium", y:140, color:"var(--alert)", w:130},
+    {label:"Best-effort", y:230, color:"var(--text-muted)", w:90}
+  ];
+  const svg = el("svg",{class:"diagram-svg", viewBox:"0 0 600 360", xmlns:SVGNS});
+  svg.appendChild(defs());
+  svg.appendChild(el("rect",{width:600,height:360,fill:"url(#grid)"}));
+  sources.forEach(s=>{
+    svg.appendChild(el("rect",{x:20,y:s.y,width:150,height:52,rx:6,fill:"var(--surface)",stroke:s.color,"stroke-width":1.5}));
+    const t=el("text",{x:95,y:s.y+24,"text-anchor":"middle"},s.label); Object.assign(t.style,{fontWeight:700,fill:"var(--text)",fontSize:"12px",fontFamily:"var(--font-mono)"}); svg.appendChild(t);
+    const n=el("text",{x:95,y:s.y+40,"text-anchor":"middle",class:"node-label"},s.note); Object.assign(n.style,{fill:s.color,letterSpacing:"0.06em",textTransform:"uppercase"}); svg.appendChild(n);
+    svg.appendChild(el("line",{x1:170,y1:s.y+26,x2:240,y2:180,stroke:s.color,"stroke-width":1.5,opacity:0.6,"marker-end":"url(#arrow)"}));
+  });
+  svg.appendChild(el("rect",{x:240,y:140,width:130,height:80,rx:8,fill:"var(--signal)",stroke:"var(--signal-dim)","stroke-width":1.5}));
+  const q=el("text",{x:305,y:172,"text-anchor":"middle"},"QoS Engine"); Object.assign(q.style,{fill:"#fff",fontWeight:700,fontSize:"13px",fontFamily:"var(--font-mono)"}); svg.appendChild(q);
+  const c1=el("text",{x:305,y:190,"text-anchor":"middle",class:"node-label"},"classify → queue"); c1.style.fill="var(--signal-tint)"; svg.appendChild(c1);
+  const c2=el("text",{x:305,y:206,"text-anchor":"middle",class:"node-label"},"app-aware"); c2.style.fill="var(--signal-tint)"; svg.appendChild(c2);
+  queues.forEach((qq,i)=>{
+    svg.appendChild(el("line",{x1:370,y1:180,x2:440,y2:qq.y+20,stroke:qq.color,"stroke-width":2,"marker-end":"url(#arrow)"}));
+    svg.appendChild(el("rect",{x:440,y:qq.y,width:qq.w,height:40,rx:4,fill:"var(--surface)",stroke:qq.color,"stroke-width":1.5}));
+    const t=el("text",{x:440+qq.w/2,y:qq.y+18,"text-anchor":"middle"},qq.label); Object.assign(t.style,{fontWeight:700,fill:qq.color,fontSize:"11px",fontFamily:"var(--font-mono)"}); svg.appendChild(t);
+    const d=el("text",{x:440+qq.w/2,y:qq.y+32,"text-anchor":"middle",class:"node-label"},"drains "+(i===0?"first":i===1?"next":"last")); Object.assign(d.style,{fill:qq.color,opacity:0.75}); svg.appendChild(d);
+  });
+  const note=el("text",{x:300,y:330,"text-anchor":"middle",class:"node-label"},"Under congestion, high-priority queue drains first — critical traffic protected.");
+  note.style.fontStyle="italic"; svg.appendChild(note);
+  document.getElementById("qos-mount").appendChild(svg);
+})();
+
+// Certifications
+const certs = [
+  {name:"Cisco Certified Network Associate (CCNA)", meta:"Cisco · ID CISC014268679 · Jan 2023", desc:"Fundamentals of networking, IP configuration, and troubleshooting.", status:"✓ Certified"},
+  {name:"Implementing Cisco SD-WAN for Enterprise and Cloud", meta:"LinkedIn Learning · Apr 2025", desc:"Hands-on SD-WAN deployment, policy management, and hybrid cloud optimization.", status:"✓ Completed"},
+  {name:"Cisco CCNP Enterprise: ENCOR v1.1 (350-401) Cert Prep", meta:"LinkedIn Learning · Aug 2025", desc:"Enterprise technologies, automation, and virtualization for dual-stack networks.", status:"✓ Completed"},
+  {name:"Cisco CCNP Enterprise: ENARSI (300-410) Cert Prep", meta:"LinkedIn Learning · Aug 2025", desc:"Advanced routing, VPN, and Layer 3 troubleshooting skills.", status:"✓ Completed"},
+  {name:"CompTIA Network+ (N10-009) Cert Prep", meta:"LinkedIn Learning · Sep 2025", desc:"Network administration fundamentals and security basics.", status:"✓ Completed"},
+  {name:"B.E. Electrical & Electronics Engineering", meta:"AVS Engineering College · 2016 – 2020", desc:"Undergraduate degree — foundation in electrical systems and computing.", status:"🎓 Degree"}
+];
+document.getElementById("cert-grid").innerHTML = certs.map(c=>`
+  <div class="cert-card">
+    <div class="cert-status">${c.status}</div>
+    <div class="cert-name">${c.name}</div>
+    <div class="cert-meta">${c.meta}</div>
+    <div class="cert-desc">${c.desc}</div>
+  </div>`).join("");
+
+// Skills
+const skills = [
+  {t:"Networking", tags:["Switching","Routing","VLANs","VTP","NAT","STP","SNMP","NTP","Telnet/SSH","ACLs","DNS/DHCP","OSI Model","IP Phones","802.1X/802.1Q","Firewall Clustering"]},
+  {t:"Protocols", tags:["EIGRP","OSPF","BGP","TCP/IP","UDP","Cisco / Tejas / HP Upgrades"]},
+  {t:"Technologies", tags:["AAA","Aruba ClearPass","RADIUS","TACACS","NAC"]},
+  {t:"SD-WAN", tags:["Spoke-Hub Architecture","Cloud Station / Insights","Cloud Port Gateway / Edge","Control / Data Plane","LAN/WAN","MPLS","Broadband","ILL","4G","PPPoE"]},
+  {t:"Security & File Transfer", tags:["NAT","Firewall Policies","QoS","SFTP","TFTP","FTP","DMZ"]},
+  {t:"Tools & Ticketing", tags:["Everest IMS-NCCM","Aruba ClearPass Policy Manager","Cisco LMS","AnyDesk","TeamViewer","BMC Remedy"]}
+];
+document.getElementById("skill-grid").innerHTML = skills.map(c=>`
+  <div class="skill-cat">
+    <div class="skill-cat-title">${c.t}</div>
+    <div class="skill-tags">${c.tags.map(t=>`<span class="skill-tag">${t}</span>`).join("")}</div>
+  </div>`).join("");
+</script>
+</body>
+</html>
 
